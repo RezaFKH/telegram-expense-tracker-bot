@@ -1,0 +1,18 @@
+# محرمانه‌ها
+.env
+
+# پایتون
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# دیتابیس محلی
+*.db
+*.sqlite3
+
+# سیستم‌عامل و ابزارها
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
