@@ -34,6 +34,9 @@ CATEGORIES = [
 
 CATEGORY_EMOJI = {name: emoji for emoji, name in CATEGORIES}
 
+# نشانهٔ جهت راست‌به‌چپ (نامرئی) برای راست‌چین‌کردن پیام‌ها در تلگرام
+RLM = "\u200f"
+
 # تبدیل ارقام فارسی و عربی به لاتین
 _DIGIT_MAP = str.maketrans("۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩", "01234567890123456789")
 
@@ -98,6 +101,17 @@ def format_amount(value: float) -> str:
         int_part, frac = int(int_raw), "." + frac_raw.rstrip("0")
     grouped = f"{int_part:,}".replace(",", "'")
     return f"{sign}{grouped}{frac}"
+
+
+def rtl(text: str) -> str:
+    """تضمین نمایش راست‌به‌چپ پیام در تلگرام.
+
+    تلگرام جهت پاراگراف را از اولین نویسهٔ قوی تعیین می‌کند؛ سطرهایی که با
+    ایموجی، عدد یا علامت شروع می‌شوند چپ‌چین می‌شوند و اعداد با
+    جداکنندهٔ ' به‌هم می‌ریزند. با گذاشتن نشانهٔ نامرئی RLM در ابتدای پیام
+    و ابتدای هر سطر، کل پیام راست‌چین و اعداد خوانا می‌شوند.
+    """
+    return RLM + f"\n{RLM}".join(text.split("\n"))
 
 
 def truncate(text: str, limit: int) -> str:

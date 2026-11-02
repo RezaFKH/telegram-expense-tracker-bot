@@ -2,7 +2,7 @@
 
 from datetime import date
 
-from utils import format_amount, format_jalali, parse_amount, to_jalali
+from utils import format_amount, format_jalali, parse_amount, rtl, to_jalali
 
 CASES = [
     # جداکنندهٔ هزارگان: هر سه رقم از راست با '
@@ -32,6 +32,10 @@ CASES = [
     (to_jalali(date(2026, 3, 21)), (1405, 1, 1)),   # نوروز 1405
     (to_jalali(date(2026, 3, 20)), (1404, 12, 29)),
     (format_jalali(date(2026, 11, 2)), "11 آبان 1405"),
+    # راست‌چین‌سازی: RLM در ابتدای پیام و هر سطر
+    (rtl("سلام"), "\u200fسلام"),
+    (rtl("📊 گزارش\n1. [11] نان — 350'000"), "\u200f📊 گزارش\n\u200f1. [11] نان — 350'000"),
+    (rtl("a\nb\nc"), "\u200fa\n\u200fb\n\u200fc"),
 ]
 
 for i, (got, want) in enumerate(CASES, 1):
